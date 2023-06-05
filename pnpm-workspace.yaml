@@ -1,0 +1,3 @@
+packages:
+  # 存储项目文件夹
+  - 'packages/*'
