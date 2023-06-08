@@ -3,6 +3,7 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -15,10 +16,11 @@ import { TypeOrmModule } from '@nestjs/typeorm'
       database: 'instant_msg',
       synchronize: true,
       retryDelay: 500,
-      retryAttempts: 100,
+      retryAttempts: 10,
       autoLoadEntities: true
     }),
-    AuthModule
+    AuthModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService]

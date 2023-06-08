@@ -1,18 +1,49 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { NestExpressApplication } from '@nestjs/platform-express/interfaces'
+import { Request, Response, NextFunction } from 'express'
 // 文档
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 // 跨域
 import * as cors from 'cors'
 // 响应处理中间件
-import { Response } from './common/response'
+import { Response as ResponseMiddle } from './common/response'
 // 异常处理中间件
 import { HttpFilter } from './common/filter'
 // session
 import * as session from 'express-session'
+// session-file-store
+import * as FileStore from 'session-file-store'
 // 全局注册验证
-import { ValidationPipe } from '@nestjs/common'
+import { HttpException, ValidationPipe, HttpStatus } from '@nestjs/common'
+
+interface SessionType {
+  session: {
+    status: string
+    userInfo: Object
+  }
+}
+type RequestSession = SessionType & Request
+const authRouter = ['/auth/register', '/auth/login']
+// Session 登录验证
+function MiddleWareSession(
+  req: RequestSession,
+  res: Response,
+  next: NextFunction
+) {
+  if (authRouter.includes(req.originalUrl)) {
+    if (req.session.status) {
+      next()
+    } else {
+      throw new HttpException(
+        '用户认证失败，请重新登录！',
+        HttpStatus.UNAUTHORIZED
+      )
+    }
+  } else {
+    next()
+  }
+}
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
@@ -27,20 +58,25 @@ async function bootstrap() {
 
   app.use(cors())
 
+  app.useGlobalFilters(new HttpFilter())
+
+  app.useGlobalInterceptors(new ResponseMiddle())
+
+  app.useGlobalPipes(new ValidationPipe())
+
   app.use(
     session({
       secret: 'Mingcomity',
+      resave: false,
+      saveUninitialized: false,
       name: 'session',
       rolling: true,
-      cookie: { maxAge: 1000 * 60 * 60 } // 过期1小时
+      cookie: { maxAge: 1000 * 60 * 60 * 4, secure: false, httpOnly: true }, // 过期4小时
+      store: new (FileStore(session))()
     })
   )
 
-  app.useGlobalFilters(new HttpFilter())
-
-  app.useGlobalInterceptors(new Response())
-
-  app.useGlobalPipes(new ValidationPipe())
+  app.use(MiddleWareSession)
 
   await app.listen(4500)
 }
