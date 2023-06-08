@@ -8,7 +8,7 @@ export class Users {
   @Column()
   name: string
 
-  @Column()
+  @Column({ select: false })
   password: string
 
   @Column({

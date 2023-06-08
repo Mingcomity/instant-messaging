@@ -1,15 +1,21 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
-import { CreateUserDto } from './dto/create-user.dto'
-import { UpdateUserDto } from './dto/update-user.dto'
+import { AuthService } from 'src/auth/auth.service'
+import type { RequestSession } from 'src/type'
+import { UpdateAvatatDto } from './dto/update-avater-user.dto'
 
 @Injectable()
 export class UserService {
-  constructor() {}
+  constructor(private readonly AuthService: AuthService) {}
+
   async findAll(): Promise<any> {
-    return {
-      aaa: 'sss'
-    }
+    return await this.AuthService.findAll()
+  }
+
+  async findUserInfo(req: RequestSession): Promise<any> {
+    return await this.AuthService.findUserInfo(req)
+  }
+
+  async updatedAvatar({ avatar }: UpdateAvatatDto, req: RequestSession) {
+    return await this.AuthService.updatedAvatar(avatar, req)
   }
 }

@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { NestExpressApplication } from '@nestjs/platform-express/interfaces'
-import { Request, Response, NextFunction } from 'express'
+import type { RequestSession } from 'src/type'
+import { Response, NextFunction } from 'express'
 // 文档
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 // 跨域
@@ -17,13 +18,6 @@ import * as FileStore from 'session-file-store'
 // 全局注册验证
 import { HttpException, ValidationPipe, HttpStatus } from '@nestjs/common'
 
-interface SessionType {
-  session: {
-    status: string
-    userInfo: Object
-  }
-}
-type RequestSession = SessionType & Request
 const authRouter = ['/auth/register', '/auth/login']
 // Session 登录验证
 function MiddleWareSession(
@@ -58,12 +52,6 @@ async function bootstrap() {
 
   app.use(cors())
 
-  app.useGlobalFilters(new HttpFilter())
-
-  app.useGlobalInterceptors(new ResponseMiddle())
-
-  app.useGlobalPipes(new ValidationPipe())
-
   app.use(
     session({
       secret: 'Mingcomity',
@@ -76,7 +64,13 @@ async function bootstrap() {
     })
   )
 
-  app.use(MiddleWareSession)
+  app.useGlobalFilters(new HttpFilter())
+
+  app.useGlobalInterceptors(new ResponseMiddle())
+
+  app.useGlobalPipes(new ValidationPipe())
+
+  // app.use(MiddleWareSession)
 
   await app.listen(4500)
 }

@@ -6,14 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Users } from './entities/auth.entity'
 import { Repository } from 'typeorm'
 import * as bcrypt from 'bcryptjs'
-import { Request } from 'express'
-interface SessionType {
-  session: {
-    status: string
-    userInfo: Object
-  }
-}
-type RequestSession = SessionType & Request
+import type { RequestSession } from 'src/type'
 
 @Injectable()
 export class AuthService {
@@ -64,25 +57,53 @@ export class AuthService {
   }
 
   // 判断是否存在用户
-  async validataUser(name: string, password: string): Promise<any> {
-    const user = await this.user.findOne({
-      where: { name }
-    })
+  async validataUser(name: string, userPassword: string): Promise<any> {
+    const user = await this.user
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where('user.name=:name', { name })
+      .getOne()
     if (!user) {
       return false
     }
-    const pwdCompar = await bcrypt.compare(password, user.password)
+    const { password, ...userInfo } = user
+    const pwdCompar = await bcrypt.compare(userPassword, password)
     if (user && pwdCompar) {
-      return user
+      return userInfo
     }
     return false
   }
 
   // 查询所有用户信息
-  // async findAll(): Promise<any> {
-  //   const res = await this.user.findAndCount()
-  //   return {
-  //     aaa: 'sss'
-  //   }
-  // }
+  async findAll(): Promise<any> {
+    const res = await this.user.find()
+    return {
+      code: 200,
+      data: res,
+      message: '获取用户信息成功！'
+    }
+  }
+
+  // 查询当前用户信息
+  async findUserInfo(req: RequestSession): Promise<any> {
+    return {
+      code: 200,
+      data: req.session.userInfo,
+      message: '获取用户信息成功！'
+    }
+  }
+
+  // 修改当前用户头像
+  async updatedAvatar(avatar: string, req: RequestSession): Promise<any> {
+    await this.user
+      .createQueryBuilder('user')
+      .update()
+      .set({ avatar })
+      .where('id=:id', { id: req.session.userInfo.id })
+      .execute()
+    return {
+      code: 200,
+      message: '更新成功！'
+    }
+  }
 }
