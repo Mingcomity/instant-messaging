@@ -18,14 +18,20 @@ import * as FileStore from 'session-file-store'
 // 全局注册验证
 import { HttpException, ValidationPipe, HttpStatus } from '@nestjs/common'
 
-const authRouter = ['/auth/register', '/auth/login']
+const authRouter = [
+  '/user/all',
+  '/user/info',
+  '/user/avater',
+  '/message/send',
+  '/message/list'
+]
 // Session 登录验证
 function MiddleWareSession(
   req: RequestSession,
   res: Response,
   next: NextFunction
 ) {
-  if (authRouter.includes(req.originalUrl)) {
+  if (authRouter.includes(req.path)) {
     if (req.session.status) {
       next()
     } else {
@@ -35,6 +41,7 @@ function MiddleWareSession(
       )
     }
   } else {
+    console.log(11)
     next()
   }
 }
@@ -70,7 +77,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe())
 
-  // app.use(MiddleWareSession)
+  app.use(MiddleWareSession)
 
   await app.listen(4500)
 }

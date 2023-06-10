@@ -3,7 +3,9 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { UserModule } from './user/user.module';
+import { UserModule } from './user/user.module'
+import { EventsGateway } from './events/events.gateway'
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -20,9 +22,11 @@ import { UserModule } from './user/user.module';
       autoLoadEntities: true
     }),
     AuthModule,
-    UserModule
+    UserModule,
+    EventsGateway,
+    MessageModule
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService, EventsGateway]
 })
 export class AppModule {}
