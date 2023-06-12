@@ -23,7 +23,7 @@ export class AuthService {
 
     if (existUser) {
       return {
-        code: HttpStatus.BAD_REQUEST,
+        code: 1001,
         message: '用户已存在！'
       }
     }
@@ -44,7 +44,7 @@ export class AuthService {
     // 不存在则返回
     if (!isUser)
       return {
-        code: 200,
+        code: 1002,
         message: '请检查用户名或密码是否正确！'
       }
     // 设置 session.status 表示登录状态，并记录当前用户的信息

@@ -5,7 +5,7 @@ import {
   HttpException
 } from '@nestjs/common'
 
-import { Request, Response } from 'express'
+import { Request, Response, response } from 'express'
 
 // 异常拦截器
 @Catch()

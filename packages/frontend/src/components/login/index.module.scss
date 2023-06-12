@@ -1,0 +1,19 @@
+@import "@/styles/variables.scss";
+
+  .login-form {
+    width: 260px;
+  }
+  .login-form-forgot {
+    float: right;
+  }
+  .ant-col-rtl .login-form-forgot {
+    float: left;
+  }
+  .login-form-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .hintText {
+    letter-spacing: 0px;
+  }
+ 

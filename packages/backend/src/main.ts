@@ -41,7 +41,6 @@ function MiddleWareSession(
       )
     }
   } else {
-    console.log(11)
     next()
   }
 }
@@ -57,7 +56,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options)
   SwaggerModule.setup('/api-docs', app, document)
 
-  app.use(cors())
+  // app.use(cors())
 
   app.use(
     session({
@@ -66,7 +65,13 @@ async function bootstrap() {
       saveUninitialized: false,
       name: 'session',
       rolling: true,
-      cookie: { maxAge: 1000 * 60 * 60 * 4, secure: false, httpOnly: true }, // 过期4小时
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 4,
+        secure: false,
+        httpOnly: true,
+        sameSite: 'lax',
+        domain: ''
+      },
       store: new (FileStore(session))()
     })
   )

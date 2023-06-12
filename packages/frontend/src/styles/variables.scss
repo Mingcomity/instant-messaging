@@ -1,0 +1,58 @@
+$contentWidth: 1000px;
+$contentHeight: 600px;
+
+$textDarkColor: #444;
+$textDarkBlueColor: #6f7982;
+$textWhiteColor:#d4d5d8;
+
+$bgColor:#d7dbe0;
+$bgDarkColor:#353840;
+$bgWhiteColor:#ffffff;
+$bgPlainColor:#f6f6f6;
+
+$receptionChatBoxColor:#e2edf9;  // 接收方聊天框颜色
+$senderChatBoxColor:#ffffff; // 发送方聊天框颜色
+
+@mixin titleStyle() {
+  color: $textDarkColor;
+  letter-spacing: 2px;
+}
+
+// 背景图片
+@mixin bgImageFlex() {
+  background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	background-color: #464646;
+}
+
+
+// 水平居中的flex
+@mixin normalFlex($direction: row, $content: space-between) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $content;
+}
+
+// 调试用
+@mixin border($color: red) {
+  border: 1px solid $color;
+}
+
+// 单行省略
+@mixin textEllipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+// 多行省略
+@mixin textMultiEllipsis($line: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line; //多行在这里修改数字即可
+  overflow: hidden;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+}
