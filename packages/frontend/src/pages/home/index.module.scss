@@ -1,0 +1,91 @@
+@import '@/styles/variables.scss';
+
+.layout {
+  height: 100%;
+  width: 100%;
+  .siderAvatar {
+    background-color: $bgDarkColor !important;
+    color: #dedede;
+    text-align: center;
+    .avatarBox {
+      height: $headerHeight;
+      margin-top: 20px;
+    }
+  }
+  .siderList {
+    background-color: $bgWhiteColor !important;
+    .title {
+      padding: 0 10px;
+      height: $headerHeight;
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid $bgDeepWhiteColor;
+      h1 {
+        font-size: 25px;
+        margin: 0;
+      }
+    }
+    .friendItem {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 80px);
+      overflow: auto;
+      @include scrollBar();
+      &::-webkit-scrollbar {
+        display: none;
+        width: 8px;
+      }
+      &:hover::-webkit-scrollbar {
+        display: none;
+      }
+    }
+   
+  }
+  .content {
+    .header {
+      height: $headerHeight;
+      background-color: $bgPlainColor;
+      border-bottom: 3px solid $bgDeepWhiteColor;
+      padding: 0 $headerPaddingX;
+      @media screen and (max-width: 467px) {
+        &{
+          padding: 0 10px;
+        }
+      }
+    }
+    .main {
+      background-color: $bgPlainColor;
+      padding: 20px;
+      padding-bottom: 0px;
+      display: flex;
+      flex-direction: column;
+      @media screen and (max-width: 467px) {
+        &{
+          padding: 0 10px;
+        }
+      }
+      .messageContainer {
+        overflow: auto;
+        flex: 9;
+        @include scrollBar();
+      }
+      .form {
+        padding-top: 5px;
+        flex: 1;
+      }
+    }
+    .footer {
+      text-align: center;
+      padding: 5px 20px 20px;
+      @media screen and (max-width: 467px) {
+        &{
+          font-size:10px;
+        }
+      }
+    }
+  }
+
+  .siderRight {
+    background-color: $bgDarkColor !important ;
+  }
+}

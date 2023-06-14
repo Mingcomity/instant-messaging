@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import homeReducer from './feature/home'
 import { createWrapper } from 'next-redux-wrapper'
-import { type } from 'os'
 
 const store = configureStore({
   reducer: {

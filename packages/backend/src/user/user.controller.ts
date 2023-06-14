@@ -25,8 +25,8 @@ export class UserController {
     summary: '获取用户列表',
     description: '需要权限！'
   })
-  async findAll() {
-    return await this.userService.findAll()
+  async findAll(@Request() req: RequestSession) {
+    return await this.userService.findAll(req)
   }
 
   @Get('info')

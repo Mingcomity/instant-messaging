@@ -1,0 +1,34 @@
+@import '@/styles/variables.scss';
+
+.friendItem {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $bgDeepWhiteColor;
+  cursor: pointer;
+  .box {
+    display: flex;
+    align-items: center;
+    padding: 5px 5px;
+    margin: 5px 5px;
+    width: 100%;
+    transition: all 0.3s;
+    .avatar {
+      margin-right: 10px;
+    }
+    .info {
+      flex: 1;
+      h5 {
+        margin-bottom:0px;
+        padding-right: 5px;
+        letter-spacing: -1px;
+        color: $textDarkColor;
+        @include textEllipsis();
+      }
+    }
+  }
+  .active {
+    background-color: $receptionChatBoxColor;
+    border-radius: 8px;
+  }
+}

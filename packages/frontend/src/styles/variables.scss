@@ -1,5 +1,7 @@
 $contentWidth: 1000px;
-$contentHeight: 600px;
+$contentHeight: 550px;
+$headerHeight: 80px;
+$headerPaddingX: 20px;
 
 $textDarkColor: #444;
 $textDarkBlueColor: #6f7982;
@@ -9,9 +11,33 @@ $bgColor:#d7dbe0;
 $bgDarkColor:#353840;
 $bgWhiteColor:#ffffff;
 $bgPlainColor:#f6f6f6;
+$bgDeepWhiteColor:#eee;
 
 $receptionChatBoxColor:#e2edf9;  // 接收方聊天框颜色
 $senderChatBoxColor:#ffffff; // 发送方聊天框颜色
+
+
+@mixin scrollBar() {
+  /* Track */
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255);
+    border-radius: 8px;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgb(201, 201, 202);
+    border-radius: 8px;
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgb(162, 162, 163);
+  }
+  
+}
 
 @mixin titleStyle() {
   color: $textDarkColor;

@@ -54,8 +54,8 @@ class MCRequest {
     })
   }
 
-  public get<T = any>(url: string, params?: any, headers?: any): Promise<T> {
-    return this.request<T>({ url, params, method: 'GET', headers })
+  public get<T = any>(url: string, headers?: any): Promise<T> {
+    return this.request<T>({ url, method: 'GET', headers })
   }
 
   public post<T = any>(url: string, data?: any, headers?: any): Promise<T> {

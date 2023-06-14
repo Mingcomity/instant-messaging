@@ -1,0 +1,16 @@
+@import '@/styles/variables.scss';
+
+.userInfo{
+  .box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    .avatarBox{
+      margin-bottom: 15px;
+    }
+    .name{
+      color: $textWhiteColor;
+    }
+  }
+}

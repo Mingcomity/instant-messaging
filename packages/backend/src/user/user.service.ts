@@ -7,8 +7,8 @@ import { UpdateAvatatDto } from './dto/update-avater-user.dto'
 export class UserService {
   constructor(private readonly AuthService: AuthService) {}
 
-  async findAll(): Promise<any> {
-    return await this.AuthService.findAll()
+  async findAll(req: RequestSession): Promise<any> {
+    return await this.AuthService.findAll(req)
   }
 
   async findUserInfo(req: RequestSession): Promise<any> {

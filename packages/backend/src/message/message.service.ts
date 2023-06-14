@@ -42,9 +42,7 @@ export class MessageService {
     return {
       code: 200,
       message: '查询成功！',
-      data: {
-        messageList: [...res1, ...res2].sort((a, b) => a.id - b.id)
-      }
+      data: [...res1, ...res2].sort((a, b) => a.id - b.id)
     }
   }
 }

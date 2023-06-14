@@ -75,17 +75,24 @@ export class AuthService {
   }
 
   // 查询所有用户信息
-  async findAll(): Promise<any> {
+  async findAll(req: RequestSession): Promise<any> {
     const res = await this.user.find()
+    // 过滤当前登录用户的信息
+    const data = res.filter((val, idx) => val.id !== req.session.userInfo.id)
     return {
       code: 200,
-      data: res,
+      data,
       message: '获取用户信息成功！'
     }
   }
 
   // 查询当前用户信息
   async findUserInfo(req: RequestSession): Promise<any> {
+    const existUser = await this.user.findOne({
+      where: { id: req.session.userInfo.id }
+    })
+    const { password, ...userInfo } = existUser
+    req.session.userInfo = userInfo
     return {
       code: 200,
       data: req.session.userInfo,
