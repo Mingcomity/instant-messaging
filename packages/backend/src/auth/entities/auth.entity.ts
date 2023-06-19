@@ -11,9 +11,7 @@ export class Users {
   @Column({ select: false })
   password: string
 
-  @Column({
-    default: 'https://api.multiavatar.com/Starcrasher.png?apikey=HuynXr0VEYsQPv'
-  })
+  @Column({})
   avatar: string
 
   @Column({

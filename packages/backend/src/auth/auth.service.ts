@@ -30,7 +30,13 @@ export class AuthService {
 
     const hashPwd = await bcrypt.hashSync(password)
 
-    await this.user.save({ name, password: hashPwd })
+    await this.user.save({
+      name,
+      avatar: `https://api.multiavatar.com/Binx%${Math.floor(
+        Math.random() * 50000
+      )}.png`,
+      password: hashPwd
+    })
 
     return {
       code: 200,

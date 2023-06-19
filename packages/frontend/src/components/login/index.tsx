@@ -1,10 +1,12 @@
-import { ReactElement, memo } from "react";
+import { ReactElement, memo, useContext } from "react";
 import { Button, Form, Input, Typography, message, notification } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import type { FC } from "react";
 import styles from './index.module.scss'
 import { LoginApi, RegisterApi } from "@/service/indexApi";
 import { useRouter } from "next/router";
+import { io } from "socket.io-client";
+import SocketContext from "@/context/socket-context";
 const { Text } = Typography;
 
 export interface IProps {

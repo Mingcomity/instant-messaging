@@ -5,14 +5,19 @@ import {
   ConnectedSocket,
   WebSocketServer
 } from '@nestjs/websockets'
-import { Socket } from 'net'
+import { Socket } from 'dgram'
+import { Server } from 'net'
+import { WsResponse } from '@nestjs/websockets'
 @WebSocketGateway(4499, { cors: true })
 export class EventsGateway {
-  @SubscribeMessage('events')
+  @WebSocketServer()
+  server: any
+
+  @SubscribeMessage('message')
   handleEvent(
     @MessageBody() data: string,
-    @ConnectedSocket() client: Socket
-  ): string {
-    return data
+    @ConnectedSocket() client: any
+  ): any {
+    client.broadcast.emit('message', data)
   }
 }
